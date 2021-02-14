@@ -1,0 +1,16 @@
+
+
+	To Be Added
+--------------------------------
+
+Home Page
+About Page
+List posts by year
+
+
+
+	    Added
+-------------------------------
+
+- List all posts
+- Code syntax highlighting

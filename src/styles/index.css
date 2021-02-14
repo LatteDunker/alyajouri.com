@@ -1,0 +1,26 @@
+#blog-post-container {
+    max-width: 800px;
+}
+
+.post-tags {
+    background: #e8e8e8;
+    border: 1px solid grey;
+    color: grey;
+    margin-right: 0.35rem;
+    margin-bottom: 2rem;
+    display: inline-block;
+
+}
+
+
+.centering-container {
+    justify-content: center;
+}
+
+#blog-post-author {
+    margin-bottom: 0.5rem;
+}
+
+#blog-post-content {
+    margin-bottom: 2rem;
+}
