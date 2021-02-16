@@ -15,7 +15,10 @@ const path = require('path');
 
 exports.createPages = async ({graphql, actions}) => {
     const { createPage } = actions
-    const blogPostTemplate = await path.resolve('src/templates/blog-post.js');
+
+    // Templates
+    const blogPostTemplate = path.resolve('src/templates/blog-post.js');
+    const tagPageTemplate = path.resolve('src/templates/tag-page.js');
 
     const result = await graphql(`
         query {
@@ -35,15 +38,18 @@ exports.createPages = async ({graphql, actions}) => {
                 }
             }
         }
-        `)
-        console.log(result.data.allStrapiBlogPosts.nodes)
-
+    `)
     if (result.errors) {
-            reporter.panicOnBuild(`Error while running GraphQL query.`)
-            return
+        reporter.panicOnBuild(`Error while running GraphQL query.`)
+        return
     }
-    
-   await result.data.allStrapiBlogPosts.nodes.forEach( (post) => {
+
+// ===================================================================================
+// Create page for each post
+// ===================================================================================
+
+    const posts = result.data.allStrapiBlogPosts.nodes;
+   await posts.forEach( (post) => {
         createPage ({
             path: `/blog/${post.slug}`,
             component: blogPostTemplate,
@@ -52,5 +58,33 @@ exports.createPages = async ({graphql, actions}) => {
             },
         })
     })
+
+// ===================================================================================
+// Create page for each tag
+// ===================================================================================
+
+    const tagSet = new Set();
+   
+
+    await result.data.allStrapiBlogPosts.nodes.forEach( (post) => {
+        if (post.tags) {
+            post.tags.forEach( (tag) => {
+                tagSet.add(tag.tag_name);
+            })
+        }
+    })
+
+    const tagList = Array.from(tagSet)
+
+    await tagList.forEach( (tag) => {
+      createPage({
+        path: `/tags/${tag}/`,
+        component: tagPageTemplate,
+        context: {
+          tag: tag,
+        },
+      })
+    })
+  
 }
 

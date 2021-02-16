@@ -18,7 +18,7 @@ const tags  = data.strapiBlogPosts.tags.map( tag => tag.tag_name )
                 <div className="post-meta-data">
                     <h1 className='post-title'> {data.strapiBlogPosts.title} </h1>
                     <div className='post-info'>By <Link to={`/me`} className={`author`}>{data.strapiBlogPosts.author}</Link> on {data.strapiBlogPosts.date} </div>
-                    <div class="tags">{tags.map((tag) => (<Link key={tag} to={`/tags/${tag}`} className='tag'>{tag}</Link>))}</div>
+                    <div className="tags">{tags.map((tag) => (<Link key={tag} to={`/tags/${tag}`} className='tag'>{tag}</Link>))}</div>
                 </div>
                 <div className='post-content'>
                     <ReactMarkdown 
